@@ -1,0 +1,5 @@
+console.log('a.js 文件模块被加载了')
+console.log('load b start')
+var f = require('./b')
+f()
+console.log('load b end')
