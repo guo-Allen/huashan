@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<a href="/product/add" class="btn btn-success btn-large">添加产品</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#编号</th>
+      <th>名称</th>
+      <th>价格</th>
+      <th>重量</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody id="tbody">
+  </tbody>
+</table>
+{% endblock %} 
+
+{% block script %}
+<script type="text/tpl" id="tpl">
+  <% products.forEach(function (product, index) { %>
+    <tr>
+      <td>
+        <%= index+1 %>
+      </td>
+      <td>
+        <%= product.prod_name %>
+      </td>
+      <td>
+        <%= product.prod_price %>
+      </td>
+      <td>
+        <%= product.prod_weight %>
+      </td>
+      <td>
+        <a href="/product/edit?id=<%= product._id %>">编辑</a>
+        <a class="remove" data-id="<%= product._id %>" href="#">删除</a>
+      </td>
+    </tr>
+    <% }) %>
+</script>
+<script>
+  loadData()
+
+  function loadData() {
+    $.ajax({
+      url: '/api/product',
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+        $('#tbody').html(template('tpl', {
+          products: data
+        }))
+      }
+    })
+  }
+
+  // ajax click
+  // 利用事件代理的形式给动态加载的 DOM 元素注册点击事件
+  $('body').on('click', '.remove', function (e) {
+    e.preventDefault()
+    if (window.confirm('Are you OK?')) {
+      $.ajax({
+        url: '/api/product/remove/' + $(this).data('id'),
+        type: 'get',
+        dataType: 'json',
+        success: function (data) {
+          var code = data.code
+          if (code === 1000) {
+            // 做删除成功的处理
+            loadData()
+          } else if (code === 1001) {
+            window.alert('删除失败了')
+          }
+        }
+      })
+    }
+  })
+</script>
+{% endblock %}

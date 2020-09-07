@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard Template for Bootstrap</title>
+  <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+  <link href="/public/css/main.css" rel="stylesheet">
+  {% block style %}
+  {% endblock %}
+</head>
+
+<body>
+  {% include "navbar.html" %}
+  <div class="container-fluid">
+    <div class="row">
+      {% include "sidebar.html" %}
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">商品管理</h1>
+        <div class="table-responsive">
+          {% block body %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/node_modules/art-template/dist/template-native.js"></script>
+  <script src="/node_modules/jquery/dist/jquery.js"></script>
+  <script src="/public/js/main.js"></script>
+  {% block script %}
+  {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+{% extends "layout.html" %} 
+
+{% block body %}
+<form role="form" action="/product/edit?id={{product._id}}" method="post">
+  <!-- 
+              表单隐藏域 ：
+                hidden 类型的 input
+                该元素看不到
+                但是该标签有 name 也一样会被提交
+                某些情况可以利用表单隐藏域保存一些不希望被用户看到的数据
+                这种数据一般用来提交给后台，作为一个业务数据
+             -->
+  <input type="hidden" name="id" id="id" value="{{product._id}}">
+  <div class="form-group">
+    <label for="">名称</label>
+    <input type="text" name="prod_name" class="form-control" placeholder="请输入商品名称" value="{{ product.prod_name }}">
+  </div>
+  <div class="form-group">
+    <label for="">描述信息</label>
+    <input type="text" name="prod_description" class="form-control" placeholder="请输入商品描述信息" value="{{ product.prod_description }}">
+  </div>
+  <div class="form-group">
+    <label for="">商品价格</label>
+    <input type="number" name="prod_price" class="form-control" placeholder="请输入商品价格" value="{{ product.prod_price }}">
+  </div>
+  <div class="form-group">
+    <label for="">商品重量</label>
+    <input type="text" name="prod_weight" class="form-control" placeholder="请输入商品重量" value="{{ product.prod_weight }}">
+  </div>
+  <div class="form-group">
+    <label for="">商品图片</label>
+    <input type="file" name="prod_image" value="{{prod_image}}">
+    <p class="help-block">请上传商品图片.</p>
+  </div>
+  <button type="submit" class="btn btn-success">编辑保存</button>
+</form>
+{% endblock %} {% block script %}
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+  $('form').on('submit', function (e) {
+    e.preventDefault()
+      // 在这里去做表单基本验证
+    $.ajax({
+      url: '/api/product/edit/',
+      type: 'post',
+      // jQuery 中的表单序列化方法会自动将表单中具有name 的 input 提取为查询字符串的形式
+      // data 参数可以指定一个查询字符串，也可以指定一个对象
+      // 如果指定了查询字符串，则 jQuery 直接将查询字符串放到请求中发送
+      // 如果指定了对象，则 jQuery 帮你再把对象转为 查询字符串然后发起请求
+      data: $(this).serialize(),
+      dataType: 'json',
+      success: function (data) {
+        var code = data.code
+        if (code === 3000) {
+          // 客户端跳转，取决于前端开发工程师
+          window.location.href = '/product'
+        } else if (code === 3001) {
+          window.alert('添加失败了')
+        }
+      }
+    })
+  })
+</script>
+{% endblock %}
