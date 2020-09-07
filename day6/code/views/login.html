@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .err {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <!-- 
+      表单有一个默认同步提交行为
+      这种默认提交行为：
+        表单会把要提交的数据提取出来，然后根据具体的请求方法
+        然后封装请求体
+        然后同步请求（就好比，在地址栏输入了一个地址敲回车）
+      同步提交，对于后台的响应消息来说，客户端会把响应消息当成一个新的文档然后替换掉当前请求页面
+   -->
+  <form method="post" action="/login" id="form">
+    用户名：<input type="text" name="username" id="username" value="{{input.username}}">
+    <br>
+    密码：<input type="password" name="password" id="password" value="{{input.password}}">
+    <br>
+    <input type="submit" value="点击登陆">
+    <p class="err">{{err_message}}</p>
+  </form>
+  <script src="/node_modules/jquery/dist/jquery.js"></script>
+  <script>
+    // window.alert('js被禁用了')
+    $('#username').on('change', function () {
+      
+    })
+
+    var $username = $('#username')
+    var $password = $('#password')
+    $('#form').on('submit', function () {
+      var username = $username.val().trim()
+      var password = $password.val().trim()
+      if (username.length === 0 || password.length === 0) {
+        window.alert('请填写完整内容')
+        return false
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "../layout/layout.html" %}
+
+{% block style %}
+{% block style %}
+
+{% block body %}
+<h1 class="page-header">编辑学生</h1>
+<form role="form" action="/product/add" method="post">
+  <div class="form-group">
+    <label for="">名称</label>
+    <input type="text" class="form-control" placeholder="请输入商品名称" name="prod_name">
+  </div>
+  <div class="form-group">
+    <label for="">描述信息</label>
+    <input type="text" class="form-control" placeholder="请输入商品描述信息" name="prod_description">
+  </div>
+  <div class="form-group">
+    <label for="">商品价格</label>
+    <input type="number" class="form-control" placeholder="请输入商品价格" name="prod_price">
+  </div>
+  <div class="form-group">
+    <label for="">商品重量</label>
+    <input type="number" class="form-control" placeholder="请输入商品重量" name="prod_weight">
+  </div>
+  <div class="form-group">
+    <label for="">商品图片</label>
+    <input type="file" name="prod_image">
+    <p class="help-block">请上传商品图片.</p>
+  </div>
+  <button type="submit" class="btn btn-success">添加保存</button>
+</form>
+{% endblock %}
+
+{% block script %}
+<script>
+  
+</script>
+{% endblock %}

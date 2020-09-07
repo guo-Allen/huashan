@@ -1,0 +1,94 @@
+{% extends "../layout/layout.html" %} {% block body %}
+<h1 class="page-header">学生信息管理系统</h1>
+<div class="table-responsive">
+  <a href="/product/add" class="btn btn-success btn-large">添加学生</a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#编号</th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>出生年月</th>
+        <th>学号</th>
+        <th>学科</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+  </table>
+</div>
+{% endblock %} {% block script %}
+<script type="text/tpl" id="tpl">
+  <% students.forEach(function (student, index) { %>
+    <tr>
+      <td>
+        <%= index+1 %>
+      </td>
+      <td>
+        <%= student.stu_name %>
+      </td>
+      <td>
+        <% if(student.stu_gender === 'f') { %>
+          女
+        <% } else { %>
+          男
+        <% } %>
+      </td>
+      <td>
+        <%= student.stu_birthday %>
+      </td>
+      <td>
+        <%= student.stu_id %>
+      </td>
+      <td>
+        <%= student.subject[0].sub_name %>
+      </td>
+      <td>
+        <a href="/student/edit?id=<%= student._id %>">编辑</a>
+        <a class="remove" data-id="<%= student._id %>" href="#">删除</a>
+      </td>
+    </tr>
+    <% }) %>
+</script>
+<script src="/node_modules/moment/moment.js"></script>
+<script>
+  loadData()
+
+  function loadData() {
+    $.ajax({
+      url: '/student/list',
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+        if (data.status === 'ok') {
+          $('#tbody').html(template('tpl', {
+            students: data.result
+          }))
+        }
+      }
+    })
+  }
+
+  // // ajax click
+  // // 利用事件代理的形式给动态加载的 DOM 元素注册点击事件
+  // $('body').on('click', '.remove', function (e) {
+  //   e.preventDefault()
+  //   if (window.confirm('Are you OK?')) {
+  //     $.ajax({
+  //       url: '/api/product/remove/' + $(this).data('id'),
+  //       type: 'get',
+  //       dataType: 'json',
+  //       success: function (data) {
+  //         var code = data.code
+  //         if (code === 1000) {
+  //           // 做删除成功的处理
+  //           loadData()
+  //         } else if (code === 1001) {
+  //           window.alert('删除失败了')
+  //         }
+  //       }
+  //     })
+  //   }
+  // })
+</script>
+{% endblock %}

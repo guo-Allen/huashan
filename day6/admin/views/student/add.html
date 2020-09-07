@@ -1,0 +1,63 @@
+{% extends "../layout/layout.html" %}
+
+{% block style %}
+{% endblock %}
+
+{% block body %}
+<h1 class="page-header">添加学生</h1>
+<form role="form" action="/student/add" method="post">
+  <div class="form-group">
+    <label for="">姓名</label>
+    <input type="text" class="form-control" placeholder="请输入学生姓名" name="stu_name">
+  </div>
+  <div class="form-group">
+    <label for="">性别</label><br>
+    <label class="radio-inline">
+      <input type="radio" name="stu_gender" id="inlineRadio1" value="m"> 男
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="stu_gender" id="inlineRadio2" value="f"> 女
+    </label>
+  </div>
+  <div class="form-group">
+    <label for="">出生年月</label>
+    <input type="date" class="form-control" placeholder="请选择出生年月" name="stu_birthday">
+  </div>
+  <div class="form-group">
+    <label for="">学号</label>
+    <input type="number" class="form-control" placeholder="请输入学号" name="stu_id">
+  </div>
+  <div class="form-group">
+    <label for="">学科</label>
+    <select class="form-control" name="stu_subject">
+      {% for subject in subjects %}
+        <option value="{{subject._id}}">{{subject.sub_name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="">爱好</label>
+    <input type="checkbox" name="" id="">吃饭
+    <input type="checkbox" name="" id="">睡觉
+    <input type="checkbox" name="" id="">吃饭
+    <input type="checkbox" name="" id="">吃饭
+    <input type="checkbox" name="" id="">吃饭
+  </div>
+  <div class="form-group">
+    <label for="">学生头像</label>
+    <input type="file" name="stu_avatar">
+    <p class="help-block">请上传学生头像.</p>
+  </div>
+  <div class="form-group">
+    <label for="">附加信息</label>
+    <textarea class="form-control" name="stu_info" id="" cols="30" rows="10"></textarea>
+  </div>
+  <button type="submit" class="btn btn-success">添加保存</button>
+</form>
+{% endblock %}
+
+{% block script %}
+<script>
+  
+</script>
+{% endblock %}
